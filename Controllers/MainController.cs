@@ -1,4 +1,5 @@
 ﻿using Entity.Context;
+using Entity.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -22,19 +23,12 @@ namespace PortfolioProject.Controllers
             return View(onePageTuple);
         }
 
-        public PartialViewResult MainPage()
+        [HttpPost]
+        public JsonResult ContactForm(ContactForm contactForm)
         {
-            //Sends Main Page Partial
-            return PartialView();
+            db.ContactForms.Add(contactForm);
+            db.SaveChanges();
+            return Json(contactForm);
         }
-
-
-        //public IActionResult Deneme()
-        //{
-        //    var skill = db.Skills.ToList();
-        //    return PartialView(skill);
-        //}
-
-      
     }
 }
