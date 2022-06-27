@@ -5,3 +5,5 @@
 -Add free boostsrap theme
 
 -Created Entity Layer for Ms-Sql database
+
+-Used ajax for form posting
