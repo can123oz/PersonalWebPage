@@ -1,6 +1,9 @@
 ﻿using Entity.Context;
 using Entity.Models;
+using Entity.Models.Validators;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -26,9 +29,31 @@ namespace PortfolioProject.Controllers
         [HttpPost]
         public JsonResult ContactForm(ContactForm contactForm)
         {
+            if (!ModelState.IsValid)
+            {
+                ViewBag.HataMesaj = ModelState.Values.FirstOrDefault(x => x.ValidationState == ModelValidationState.Invalid).Errors[0].ErrorMessage;
+                return null;
+            }
             db.ContactForms.Add(contactForm);
             db.SaveChanges();
             return Json(contactForm);
+        }
+
+        [HttpGet]
+        public IActionResult FormDeneme()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult FormDeneme(ContactForm contactForm)
+        {
+            if (!ModelState.IsValid)
+            {
+                ViewBag.HataMesaj = ModelState.Values.FirstOrDefault(x => x.ValidationState == ModelValidationState.Invalid).Errors[0].ErrorMessage;
+                return View();
+            }
+            return View();
         }
     }
 }

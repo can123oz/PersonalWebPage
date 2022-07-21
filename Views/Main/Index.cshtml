@@ -13,22 +13,33 @@
 @*About Section*@
 <partial name="About" />
 @*Contact Section*@
-<partial name="ContactForm" />
+<partial name="ContactForm"  model="@Model.contactForms"/>
 @*Footer Section*@
 <partial name="_Footer" />
 
-@section script {
 
+
+@section script {
     <script>
         $(document).ready(function () {
         });
-
+        //$("#contactForm").validate({
+        //    rules: {
+        //        FullName: {
+        //            required: true
+        //        },
+        //    },
+        //    messages: {
+        //        FullName: {
+        //            required: "Please enter your name.",
+        //        },
+        //    },
+        //})
         $("#submitButton").on("click", function () {
             const formvalid = $("#contactForm");
             console.log("jquery on click");
             const form = document.getElementById("contactForm");
             const ContactForm = new FormData(form);
-
             $.ajax({
                 type: "POST",
                 url: "/Main/ContactForm",
@@ -36,6 +47,7 @@
                 contentType: false,
                 processData: false,
                 success: function (suc) {
+                    swal("Nice to meet you!", "Thank you for reaching me out", "success");
                     console.log("Success : " + suc);
                     formvalid.find("input").val("");
                     formvalid.find("textarea").val("");
